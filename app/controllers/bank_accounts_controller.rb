@@ -15,18 +15,19 @@ class BankAccountsController < ApplicationController
     @bank_account = current_user.bank_accounts.new
   end
 
+  # GET /bank_accounts/1/edit
+  def edit
+  end
+
   # POST /bank_accounts
   def create
     @bank_account = current_user.bank_accounts.new(bank_account_params)
-    if @bank_account.save 
+
+    if @bank_account.save
       redirect_to @bank_account, notice: 'Bank account was successfully created.'
-    else 
+    else
       render :new
     end
-  end
-
-  # GET /bank_accounts/1/edit
-  def edit
   end
 
   # PATCH/PUT /bank_accounts/1
@@ -45,12 +46,13 @@ class BankAccountsController < ApplicationController
   end
 
   private
-
+    # Use callbacks to share common setup or constraints between actions.
     def set_bank_account
       @bank_account = current_user.bank_accounts.find(params[:id])
     end
 
+    # Only allow a trusted parameter "white list" through.
     def bank_account_params
-      params.require(:bank_account).permit(:amount, :institution, :description, :active)
+      params.require(:bank_account).permit( :institution, :amount, :description, :active)
     end
 end
